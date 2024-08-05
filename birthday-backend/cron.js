@@ -13,7 +13,7 @@ const email_transporter = {
 
 const transporter = nodeMailer.createTransport(email_transporter);
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 7 * * *', async () => {
   const today = new Date();
   const day = today.getDate();
   const month = today.getMonth() + 1;
@@ -27,7 +27,7 @@ cron.schedule('* * * * *', async () => {
           ],
         },
       })
-      .select('-password -__v -_id');
+      .select(' -__v -_id');
     console.log(users);
 
     for (const user of users) {
@@ -51,5 +51,5 @@ cron.schedule('* * * * *', async () => {
     console.log(error.message);
   }
 
-  console.log('running a task every minute');
+  console.log('running task everyday at 7am');
 });
