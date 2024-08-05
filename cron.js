@@ -3,8 +3,7 @@ const nodeMailer = require('nodemailer');
 const userModel = require('./model/userModel');
 
 const email_transporter = {
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
+  service: 'gmail',
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -27,7 +26,7 @@ cron.schedule('0 7 * * *', async () => {
           ],
         },
       })
-      .select(' -__v -_id');
+      .select('-password -__v -_id');
     console.log(users);
 
     for (const user of users) {
@@ -39,17 +38,18 @@ cron.schedule('0 7 * * *', async () => {
         `;
 
       await transporter.sendMail({
-        from: process.env.SMTP_FROM,
+        from: 'marachiks@gmail.com',
         to: user.email,
         subject: 'Happy Birthday',
         html: emailContent,
       });
 
-      console.log(`Email sent to user ${user.username}`);
+      console.log(`Email sent to ${user.username}`);
     }
+    console.log('running everyday at 7am');
+
   } catch (error) {
     console.log(error.message);
   }
 
-  console.log('running task everyday at 7am');
 });

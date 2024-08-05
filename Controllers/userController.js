@@ -4,12 +4,6 @@ const createUser = async (req, res)=>{
 const user = req.body
 
 try {
-    const existingUser = await userModel.findOne({email: user.email})
-    if(existingUser){
-        return res.status(409).json({
-            message: 'user already created'
-        })
-    }
     const createdUser = await userModel.create({
         username: user.username,
         email: user.email,
@@ -18,12 +12,9 @@ try {
 
     res.status(200).json({
         message: 'Registered successfuly',
-        data: {
-            username: user.username,
-            email: user.email,
-            dateOfBirth: user.dateOfBirth
+        createUser
         }
-        })
+    )
     }
 
 catch (error) {

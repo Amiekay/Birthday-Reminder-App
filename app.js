@@ -2,9 +2,10 @@ const express = require('express')
 const cors = require('cors');
 const connectToMongodb = require('./db')
 const app = express()
-require('./cron');
 const userRoute = require('./Routes/userRoute')
+require('./cron');
 require('dotenv').config()
+
 const PORT = process.env.PORT || 8000
 connectToMongodb()
 const corsOptions = {
